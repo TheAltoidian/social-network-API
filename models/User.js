@@ -1,5 +1,6 @@
 const { Schema, model } = require('mongoose');
-import { isEmail } from 'validator/lib/isEmail';
+// import { isEmail } from 'validator/lib/isEmail';
+var validator = require('validator');
 
 const UserSchema = new Schema(
     {
@@ -13,7 +14,7 @@ const UserSchema = new Schema(
             type: String,
             unique: true,
             required: true,
-            validate: [isEmail, 'invalid email']
+            validate: [validator.isEmail, 'invalid email']
         },
         thoughts: [
             {
@@ -39,10 +40,7 @@ const UserSchema = new Schema(
 
 //get total count of friends
 UserSchema.virtual('friendCount').get(function () {
-    return this.friends.reduce(
-        (total, friend) => total + friends.length + 1,
-        0
-    );
+    return this.friends.length;
 });
 
 const User = model('User', UserSchema);

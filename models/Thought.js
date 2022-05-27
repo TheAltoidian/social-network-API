@@ -1,5 +1,7 @@
 const { Schema, model, Types } = require('mongoose');
-import { isLength } from 'validator/lib/isLength';
+// import { isLength } from 'validator/lib/isLength';
+var validator = require('validator');
+
 const dateFormat = require('../utils/dateFormat');
 
 const ReactionSchema = new Schema(
@@ -11,7 +13,7 @@ const ReactionSchema = new Schema(
         reactionBody: {
             type: String,
             required: true,
-            validate: [isLength, { min: 1, max: 280 }, 'invalid length']
+            validate: [validator.isLength, { min: 1, max: 280 }, 'invalid length']
         },
         username: {
             type: String,
@@ -30,7 +32,7 @@ const ThoughtSchema = new Schema(
         thoughtText: {
             type: String,
             required: true,
-            validate: [isLength, { min: 1, max: 280 }, 'invalid length']
+            validate: [validator.isLength, { min: 1, max: 280 }, 'invalid length']
         },
         createdAt: {
             type: Date,
@@ -41,7 +43,7 @@ const ThoughtSchema = new Schema(
             type: String,
             required: true
         },
-        reactions: [reactionSchema]
+        reactions: [ReactionSchema]
     },
     {
         toJSON: {
